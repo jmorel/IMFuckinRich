@@ -1,0 +1,88 @@
+## -*- coding: utf-8 -*
+
+% if amount is not None and errors['amount_not_number']:
+<p class="error">The amount you entered isn't a number. Please enter a number instead.</p>
+% endif
+
+% if currency is not None and errors['wrong_currency']:
+<p class="error">Now that's weird! The currency you picked ain't right. That should not have happened with a dropdown list. Doing anything funny?</p>
+% endif
+
+% if date is not None and errors['no_date']:
+<p class="error">You must specify a (valid) date!</p>
+% endif
+
+% if errors['wrong_password']:
+<p class="error">You entered a wrong password!</p>
+% endif
+
+% if success:
+<p class="success">Your bank account has been updated!</p>
+% else:
+<form method="post" action="/savetransaction" class="new_transaction">
+	
+	<input type="hidden" name="username" value="${username}" />
+	<input type="hidden" name="transactionID" value="${transactionID}" />
+	
+	<span id="close_form_1">close</span>
+	
+	<h3>${(transactionID is None)*'New'+(transactionID is not None)*'Edit'} transaction
+	% if transactionID is not None and transactionID != 'None':
+		<input type="button" id="delete_button" value="delete transaction" />
+	% endif
+	</h3>
+	<table>
+		<tr>
+			<td>
+				<h4>Amount</h4>
+				<input type="text" name="amount" id="amount" value="${str(amount)*(amount is not None)}"/>
+			</td>
+			<td>
+				<h4>Currency</h4>
+				% if not currency:
+					${currency = 'USD'}
+				% endif
+				<select id="currency" name="currency">
+					
+					% for c in currencies:
+					<option value="${c['code']}" ${' selected="selected"'*(c['code']==currency)}>${c['name']} - ${c['code']}</option></option>
+					% endfor
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<h4>Given by</h4>
+				<input type="text" name="given_by" id="given_by" value="${str(given_by)*(given_by is not None)}"/>
+			</td>
+			<td>
+				<h4>On the (mm/dd/yyyy)</h4>
+				<input type="text" name="date" id="date" value="${str(date)*(date is not None)}"/>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<h4>Why</h4>
+				<input type="text" id="why" name="why" value="${str(why)*(why is not None)}" />
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<h4>Additional notes</h4>
+				<textarea name="notes" id="notes">${str(notes)*(notes is not None)}</textarea>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+			<span id="close_form_2">close</span>
+				Please insert your password:
+				<input type="password" name="password" />
+				<input type="submit" value="${(str(transactionID) == 'None')*'Add'+(str(transactionID) != 'None')*'Edit'}!" />
+				% if transactionID is not None:
+					<input type="button" id="delete_button" value="delete transaction" />
+				% endif
+			</td>
+		</tr>
+	</table>
+</form>
+% endif

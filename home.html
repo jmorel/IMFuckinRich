@@ -1,0 +1,132 @@
+## -*- coding: utf-8 -*
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<title>I'm fuckin' rich!</title>
+	<link rel="icon" type="image/png" href="/pix/favicon.png" />
+
+	<link href="/css/imfr.css" rel="stylesheet" type="text/css" />
+	
+	<!--[if IE]><script language="javascript" type="text/javascript" src="/js/excanvas.min.js"></script><![endif]-->
+	<script type="text/javascript" src="/js/jquery-1.3.2.min.js"></script>
+	<script type="text/javascript" src="/js/home.js"></script>
+
+	<!-- NO IE 6-->
+	<!--<script src="http://www.end6.org/js/eng_end6.js" type="text/javascript"></script>-->
+	
+</head>
+
+<body>
+
+<div class="registered">
+	Already registered? Enter your <form id="gotoprofile" method="get" action="/"><input type="text" name="username" id="username" value="nick"/>and <input type="submit" value="go to your profile !"></form>
+</div>
+
+<a href="http://imfuckinrich.com" class="backtohome"><img id="logo" src="/pix/logo-nospace.png" alt="I'm fuckin' rich logo: a pile of money, disney style" /></a>
+<h1><a href="http://imfuckinrich.com" class="backtohome"><img id="title" src="/pix/title.png" alt="I'M FUCKIN' RICH!" /></a></h1>
+
+<h2>Because you're so rich you can't<br/> keep track of all of your money</h2>
+<div class="baloon">
+	<p>I'm fuckin' rich.</p>
+	<p>And so are <b>you</b>.</p>
+	<p>You may not realize it for you're so rich you have no idea how rich you are. At <a href="http://imfuckinrich.com">I'm&nbsp;fuckin'&nbsp;rich!&nbsp;(.com)</a>, we are dedicated to helping you keep track of all that money you have and are unaware of. You may be wondering where all of this money comes from, and you would be right. Just take a look at your inbox. You probably won $50000 thanks to a generous nigerian ex-president while reading this text. Don't let it go to waste! Claim it and keep track of it on <a href="http://imfuckinrich.com">I'm&nbsp;fuckin'&nbsp;rich!&nbsp;(.com)</a></p>
+</div>
+
+<h2>I want to keep track of my money too!</h2>
+
+% if nick_taken:
+<p class="error">This nick is already taken. Please choose another one.</p>
+% endif
+
+% if nick_not_valid:
+<p class="error">This nick is not valid: you can only use a-z0-9 chars.</p>
+% endif
+
+% if wrong_currency:
+<p class="error">Now that's weird! The currency you picked ain't right. That should not have happened with a dropdown list. Doing anything funny?</p>
+% endif
+
+
+% if nick_not_valid is not None and nick_not_valid is not True and nick_taken is not None and nick_taken is not True and wrong_currency is not None and wrong_currency is not True:
+<p class="success">
+You are now a registered user of <a href="http://imfuckinrich.com">I'm fuckin' rich! (.com)</a><br/>
+Go check your profile at <a href="/${nick}">http://imfuckinrich.com/${nick}</a></p>
+% else:
+<div class="baloon">
+<p>Choose a nick name (low-case alphanumerical characters only), a password and your default<br/> currency and start keeping track of your money right now:</p>
+	<form class="new_user" method="post" action="/newuser/">
+		<input id="nickname" type="text" name="username" value="nickname"/>
+		<input id="password" type="password" name="password" value="pwd" />
+		<select id="currency" name="currency">
+			% for currency in currencies:
+			<option value="${currency['code']}" ${' selected="selected"'*(currency['code']=='USD')}>${currency['name']} - ${currency['code']}</option></option>
+			% endfor
+		</select><br/>
+		<input id="ok" type="submit" value="Go!"/>
+	</form>
+</div>
+
+% endif
+
+<div id="mentions">I'm fuckin' rich!, another silly project by <a href="mailto:morel.jeremy@gmail.com">Jeremy Morel</a>. Gorgeous logo by <a href="http://latanadeltorinese.blogspot.com/">Maximiliano Mentuccia</a></div>
+
+
+<!-- SOCIAL NETWORKS -->
+<div class="share">
+	<!-- DIGG -->
+	<p>
+	<a class="DiggThisButton" href="http://digg.com/submit?url=http%3A%2F%2Fimfuckinrich.com&amp;title=I'm%20fuckin'%20rich!"></a>
+	<script src="http://digg.com/tools/diggthis.js" type="text/javascript"></script>
+	</p>
+	<!-- TWITTER -->
+	<p>
+	<script type="text/javascript">
+	tweetmeme_url = 'http://imfuckinrich.com';
+	</script>
+	<script type="text/javascript" src="http://tweetmeme.com/i/scripts/button.js"></script>
+	</p>
+	<!-- REDDIT -->
+	<p>
+	<script type="text/javascript">
+	reddit_url='http://imfuckinrich.com';
+	reddit_title='I\'m fuckin\' rich!';
+	</script>
+	<script type="text/javascript" src="http://www.reddit.com/button.js?t=3"></script>
+	</p>
+	<!-- GOOGLE BUZZ -->
+	<p>
+	<a rel="nofollow" target="_blank" href="http://www.google.com/reader/link?url=http%3A%2F%2Fimfuckinrich.com&title=I'm%20fuckin'%20rich!">
+	<img src="/pix/buzz.png" alt="Buzz This" />
+	</a>
+	</p>
+	<!-- FACEBOOK -->
+	<p>
+	<a name="fb_share" type="box_count" share_url="http://imfuckinrich.com" href="http://www.facebook.com/sharer.php">Share</a>
+	<script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+	<!--
+	<script type="text/javascript">var fbShare = {
+	url: 'http://imfuckinrich.com',
+	size: 'large'
+	}</script>
+	<script src="http://widgets.fbshare.me/files/fbshare.js" type="text/javascript"></script>-->
+	</p>
+</div>
+
+
+<!-- GOOGLE ANALYTICS -->
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-13082269-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+
+</body>
+
+</html>
